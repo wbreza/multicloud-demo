@@ -1,0 +1,11 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Apples",
+      "description": "These apples are great!",
+      "price": 1.00,
+      "active": true
+    }
+  ]
+}
