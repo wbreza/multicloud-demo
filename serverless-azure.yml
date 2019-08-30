@@ -19,7 +19,7 @@ service: multicloud-product-demo
 
 provider:
   name: azure
-  region: West US 2
+  region: West US
   runtime: nodejs10.x
 
 plugins:
