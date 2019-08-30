@@ -1,0 +1,83 @@
+# Welcome to Serverless!
+#
+# This file is the main config file for your service.
+# It's very minimal at this point and uses default values.
+# You can always add more config options for more control.
+# We've included some commented out config examples here.
+# Just uncomment any of them to get that config option.
+#
+# For full config options, check the docs:
+#    docs.serverless.com
+#
+# Happy Coding!
+
+service: multicloud-product-demo
+
+# You can pin your service to only deploy with a specific Serverless version
+# Check out our docs for more details
+# frameworkVersion: "=X.X.X"
+
+provider:
+  name: azure
+  region: West US 2
+  runtime: nodejs10.x
+
+plugins:
+  - serverless-azure-functions
+  - serverless-webpack
+
+functions:
+  getProductList:
+    handler: src/handlers/products.getProductList
+    events:
+      - http: true
+        x-azure-settings:
+          methods:
+            - GET
+          route: products
+          authLevel: anonymous
+  getProduct:
+    handler: src/handlers/products.getProduct
+    events:
+      - http: true
+        x-azure-settings:
+          methods:
+            - GET
+          route: products/{productId}
+          authLevel: anonymous
+  postProduct:
+    handler: src/handlers/products.postProduct
+    events:
+      - http: true
+        x-azure-settings:
+          methods:
+            - POST
+          route: products
+          authLevel: anonymous
+  putProduct:
+    handler: src/handlers/products.putProduct
+    events:
+      - http: true
+        x-azure-settings:
+          methods:
+            - PUT
+          route: products/{productId}
+          authLevel: anonymous
+  patchProduct:
+    handler: src/handlers/products.patchProduct
+    events:
+      - http: true
+        x-azure-settings:
+          methods:
+            - PATCH
+          route: products/{productId}
+          authLevel: anonymous
+  deleteProduct:
+    handler: src/handlers/products.deleteProduct
+    events:
+      - http: true
+        x-azure-settings:
+          methods:
+            - DELETE
+          route: products/{productId}
+          authLevel: anonymous
