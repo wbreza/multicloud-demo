@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Azure Functions sample for the Serverless framework",
   "scripts": {
+    "lint": "eslint src/**/*.js",
     "test": "jest",
     "test:integration": "npm run test -- --testRegex=test\\.integration\\.js",
     "start": "npm run start:azure",
@@ -27,6 +28,12 @@
     "shortid": "^2.2.14"
   },
   "devDependencies": {
+    "eslint": "^6.3.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-node": "^9.2.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
     "jest": "^24.8.0",
     "serverless-azure-functions": "^1.0.0-11",
     "serverless-offline": "^5.10.1",

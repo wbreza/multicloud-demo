@@ -69,7 +69,7 @@ module.exports = {
       id: context.req.pathParams.get("productId")
     };
 
-    product = productService.save(udpatedProduct);
+    productService.save(udpatedProduct);
 
     return context.send(null, 204);
   }),
