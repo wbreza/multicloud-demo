@@ -1,10 +1,31 @@
 {
   "products": [
     {
-      "id": 1,
+      "id": "x3890Dd",
       "name": "Apples",
       "description": "These apples are great!",
       "price": 1.00,
+      "active": true
+    },
+    {
+      "id": "p3458Ds",
+      "name": "Orange",
+      "description": "Full of vitamin C!",
+      "price": 1.25,
+      "active": true
+    },
+    {
+      "id": "bk349Aa",
+      "name": "Mango",
+      "description": "Very tropical!",
+      "price": 2.25,
+      "active": true
+    },
+    {
+      "id": "j243Dda",
+      "name": "Avacado",
+      "description": "Let's make some guacamole!",
+      "price": 2.50,
       "active": true
     }
   ]

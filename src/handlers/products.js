@@ -1,43 +1,39 @@
 const app = require("../app");
 const middlewares = require("../config")();
-const productService = require("../services/productsService");
+const productValidation = require("../middleware/productValidationMiddleware");
+const productMiddlewares = middlewares.concat(productValidation());
+const productService = require("../services/productService");
 
 module.exports = {
   /**
    * Gets a list of products
    */
   getProductList: app.use(middlewares, (context) => {
-    const products = productService.getProducts();
-
+    const products = productService.getList();
     context.send({ values: products }, 200);
   }),
 
   /**
    * Gets the metadata for the specified product id
    */
-  getProduct: app.use(middlewares, (context) => {
-    if (!context.pathParams.productId) {
-      return context.send({ message: "Product ID is required" }, 400);
-    }
-
-    const product = productServicd.get(context.pathParams.producId);
-    if (!product) {
-      return context.send({ message: "Product not found" }, 404);
-    }
-
-    context.send({ value: product }, 200);
+  getProduct: app.use(productMiddlewares, (context) => {
+    context.send({ value: context.product }, 200);
   }),
 
   /**
    * Creates a new product
    */
   postProduct: app.use(middlewares, (context) => {
-    const product = context.req.body;
+    let product = context.req.body;
     if (!product) {
       return context.send({ message: "Product is required" }, 400);
     }
 
-    product = productService.save(product);
+    try {
+      product = productService.save(product);
+    } catch (err) {
+      return context.send({ message: err.message }, 409);
+    }
 
     return context.send({ value: product }, 201);
   }),
@@ -45,12 +41,7 @@ module.exports = {
   /**
    * Updates a product with the specified id
    */
-  putProduct: app.use(middlewares, (context) => {
-    const existing = productService.get(context.req.pathParams.productId);
-    if (!existing) {
-      return context.send({ message: "Product not found" }, 404);
-    }
-
+  putProduct: app.use(productMiddlewares, (context) => {
     const product = context.req.body;
     if (!product) {
       return context.send({ message: "Product is required" }, 400);
@@ -58,7 +49,7 @@ module.exports = {
 
     const updatedProduct = {
       ...context.req.body,
-      id: context.req.pathParams.productId
+      id: context.req.pathParams.get("productId")
     }
 
     productService.save(updatedProduct);
@@ -69,16 +60,11 @@ module.exports = {
   /**
    * Merges an update with the product at the specified id
    */
-  patchProduct: app.use(middlewares, (context) => {
-    const existing = productService.get(context.req.pathParams.productId);
-    if (!existing) {
-      return context.send({ message: "Product not found" }, 404);
-    }
-
+  patchProduct: app.use(productMiddlewares, (context) => {
     const udpatedProduct = {
-      ...existing,
+      ...context.product,
       ...context.req.body,
-      id: context.req.pathParams.productId
+      id: context.req.pathParams.get("productId")
     };
 
     product = productService.save(udpatedProduct);
@@ -89,13 +75,8 @@ module.exports = {
   /**
    * Delete a product with the specified id
    */
-  deleteProduct: app.use(middlewares, (context) => {
-    const product = productService.get(context.req.pathParams.productId);
-    if (!product) {
-      return context.send({ message: "Product not found" }, 404);
-    }
-
-    productService.remove(context.req.pathParams.productId);
+  deleteProduct: app.use(productMiddlewares, (context) => {
+    productService.remove(context.req.pathParams.get("productId"));
     context.send(null, 204);
   })
 };
