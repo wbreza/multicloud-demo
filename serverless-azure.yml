@@ -21,6 +21,33 @@ provider:
   name: azure
   region: West US
   runtime: nodejs10.x
+  apim:
+    api:
+      name: products-api
+      subscriptionRequired: false
+      displayName: Products API
+      description: Products CRUD REST API
+      protocols:
+        - https
+      path: products
+      authorization: none
+    backend:
+      url: api/products
+
+  cors:
+    allowCredentials: false
+    allowedOrigins:
+      - "*"
+    allowedMethods:
+      - GET
+      - POST
+      - PUT
+      - DELETE
+      - PATCH
+    allowedHeaders:
+      - "*"
+    exposeHeaders:
+      - "*"
 
 plugins:
   - serverless-azure-functions
@@ -36,6 +63,11 @@ functions:
             - GET
           route: products
           authLevel: anonymous
+    apim:
+      operations:
+        - method: GET
+          urlTemplate: /
+
   getProduct:
     handler: src/handlers/products.getProduct
     events:
@@ -45,6 +77,14 @@ functions:
             - GET
           route: products/{productId}
           authLevel: anonymous
+    apim:
+      operations:
+        - method: GET
+          urlTemplate: /{productId}
+          templateParameters:
+            - name: productId
+              type: string
+
   postProduct:
     handler: src/handlers/products.postProduct
     events:
@@ -54,6 +94,11 @@ functions:
             - POST
           route: products
           authLevel: anonymous
+    apim:
+      operations:
+        - method: POST
+          urlTemplate: /
+
   putProduct:
     handler: src/handlers/products.putProduct
     events:
@@ -63,6 +108,14 @@ functions:
             - PUT
           route: products/{productId}
           authLevel: anonymous
+    apim:
+      operations:
+        - method: PUT
+          urlTemplate: /{productId}
+          templateParameters:
+            - name: productId
+              type: string
+
   patchProduct:
     handler: src/handlers/products.patchProduct
     events:
@@ -72,6 +125,14 @@ functions:
             - PATCH
           route: products/{productId}
           authLevel: anonymous
+    apim:
+      operations:
+        - method: PATCH
+          urlTemplate: /{productId}
+          templateParameters:
+            - name: productId
+              type: string
+
   deleteProduct:
     handler: src/handlers/products.deleteProduct
     events:
@@ -81,3 +142,10 @@ functions:
             - DELETE
           route: products/{productId}
           authLevel: anonymous
+    apim:
+      operations:
+        - method: DELETE
+          urlTemplate: /{productId}
+          templateParameters:
+            - name: productId
+              type: string
