@@ -4,12 +4,7 @@ const productService = require("../services/productService");
 const demoModel = require("../products.json");
 
 describe("Products REST API", () => {
-  let builder;
-
   beforeEach(() => {
-    builder = new CloudContextBuilder();
-    builder.asHttpRequest();
-
     jest.resetAllMocks();
     jest.clearAllMocks();
   });
