@@ -25,11 +25,13 @@ module.exports = {
    */
   postProduct: app.use(middlewares, (context) => {
     let product = context.req.body;
+
     if (!product) {
       return context.send({ message: "Product is required" }, 400);
     }
 
     try {
+      delete product.id;
       product = productService.save(product);
     } catch (err) {
       return context.send({ message: err.message }, 409);
