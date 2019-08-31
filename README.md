@@ -1,14 +1,14 @@
 # @multicloud Demo
 
-This project show an easy example on how to create a Serverless REST API that supports multi-cloud deployment to Azure & AWS.  The project is built using the Serverless framwork and the CSE @multicloud library
+This project shows an easy example on how to create a Serverless REST API that supports multi-cloud deployment to Azure & AWS.  The project is built using the Serverless framwork and the CSE @multicloud library **(coming soon!)**
 
 ## Pre-requisites
 
 1. Node.js `v8.5.0` or later.
 1. Serverless CLI `v1.9.0` or later. You can run `npm install -g serverless` to install it.
-1. An Azure account. If you don't already have one, you can sign up for a [free trial](https://azure.microsoft.com/en-us/free/) that includes \$200 of free credit.
+1. An Azure and/or AWS account(s) *(For Deployment)*
 
-## Running Locally
+## Setup
 
 Clone the repository
 ```bash
@@ -36,39 +36,15 @@ npm start
 ```
 
 ### Deploying to Azure
+To deploy to Azure you will need an Azure account and have your credentials configured correctly. See the [quick start](https://serverless.com/framework/docs/providers/azure/guide/quick-start/) for more information.
 ```bash
 npm run deploy:azure
 ```
 
 ### Deploying to AWS
+To deploy to AWS you will need an AWS account and have your credentials configured correctly. See the [quick start](https://serverless.com/framework/docs/providers/aws/guide/quick-start/) for more information.
 ```bash
 npm run deploy:aws
-```
-
-## Advanced Authentication
-
-The getting started walkthrough illustrates the interactive login experience,
-which is recommended for most users. However, if you'd prefer to create an Azure
-[service principal](http://bit.ly/2wLVE7k)
-yourself, you can indicate that this plugin should use its credentials instead,
-by setting the following environment variables:
-
-**Bash**
-
-```bash
-export azureSubId='<subscriptionId>'
-export azureServicePrincipalTenantId='<tenantId>'
-export azureServicePrincipalClientId='<servicePrincipalName>'
-export azureServicePrincipalPassword='<password>'
-```
-
-**Powershell**
-
-```powershell
-$env:azureSubId='<subscriptionId>'
-$env:azureServicePrincipalTenantId='<tenantId>'
-$env:azureServicePrincipalClientId='<servicePrincipalName>'
-$env:azureServicePrincipalPassword='<password>'
 ```
 
 ## FAQs
