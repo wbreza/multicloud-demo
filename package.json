@@ -13,8 +13,6 @@
     "deploy": "npm run deploy:azure && npm run deploy:aws",
     "deploy:aws": "sls deploy --config serverless-aws.yml",
     "deploy:azure": "sls deploy --config serverless-azure.yml",
-    "generate:spn": "bash ./scripts/generate-service-principal.sh",
-    "dotenv": "set -o allexport; source .env; set +o allexport",
     "update:multicloud": "npm install @multicloud/sls-core@beta @multicloud/sls-azure@beta @multicloud/sls-aws@beta @multicloud/sls-711@beta --save"
   },
   "keywords": [
