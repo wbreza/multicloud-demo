@@ -7,11 +7,13 @@ const {
   LogLevel,
 } = require("@multicloud/sls-core");
 
+const defaultLogger = new ConsoleLogger(LogLevel.VERBOSE);
+
 module.exports = function config() {
   return [
-    LoggingServiceMiddleware(new ConsoleLogger(LogLevel.VERBOSE)),
+    LoggingServiceMiddleware(defaultLogger),
     PerformanceMiddleware(),
-    ExceptionMiddleware(),
+    ExceptionMiddleware({ log: defaultLogger.error }),
     HTTPBindingMiddleware()
   ];
 };

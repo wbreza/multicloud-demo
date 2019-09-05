@@ -28,12 +28,19 @@ plugins:
   - serverless-webpack
 
 functions:
+  # Products
   getProductList:
     handler: src/handlers/products.getProductList
     events:
       - http:
           method: GET
           path: /products
+  getProductListByCategory:
+    handler: src/handlers/products.getProductListByCategory
+    events:
+      - http:
+          method: GET
+          path: /categories/{categoryId}/products
   getProduct:
     handler: src/handlers/products.getProduct
     events:
@@ -64,3 +71,47 @@ functions:
       - http:
           method: DELETE
           path: /products/{productId}
+  # Categories
+  getCategoryList:
+    handler: src/handlers/categories.getCategoryList
+    events:
+      - http:
+          method: GET
+          path: /categories
+  getCategoryListByCategory:
+    handler: src/handlers/categories.getCategoryListByCategory
+    events:
+      - http:
+          method: GET
+          path: /categories/{categoryId}/categories
+  getCategory:
+    handler: src/handlers/categories.getCategory
+    events:
+      - http:
+          method: GET
+          path: /categories/{categoryId}
+  postCategory:
+    handler: src/handlers/categories.postCategory
+    events:
+      - http:
+          method: POST
+          path: /categories
+  putCategory:
+    handler: src/handlers/categories.putCategory
+    events:
+      - http:
+          method: PUT
+          path: /categories/{categoryId}
+  patchCategory:
+    handler: src/handlers/categories.patchCategory
+    events:
+      - http:
+          method: PATCH
+          path: /categories/{categoryId}
+  deleteCategory:
+    handler: src/handlers/categories.deleteCategory
+    events:
+      - http:
+          method: DELETE
+          path: /categories/{categoryId}
+

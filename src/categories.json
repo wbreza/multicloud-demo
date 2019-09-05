@@ -1,0 +1,16 @@
+{
+  "categories": [
+    {
+      "id": "ke73Ap5",
+      "name": "Fruits",
+      "description": "Natures Candy",
+      "active": true
+    },
+    {
+      "id": "n4783Sd",
+      "name": "Vegetables",
+      "description": "Mean and green",
+      "active": true
+    }
+  ]
+}

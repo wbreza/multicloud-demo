@@ -1,6 +1,8 @@
 const app = require("../app");
 const middlewares = require("../config")();
 const productValidation = require("../middleware/productValidationMiddleware");
+const categoryValidation = require("../middleware/categoryValidationMiddleware");
+const categoryMiddlewares = middlewares.concat(categoryValidation());
 const productMiddlewares = middlewares.concat(productValidation());
 const productService = require("../services/productService");
 
@@ -10,6 +12,14 @@ module.exports = {
    */
   getProductList: app.use(middlewares, (context) => {
     const products = productService.getList();
+    context.send({ values: products }, 200);
+  }),
+
+  /**
+   * Get a list of products filtered by category
+   */
+  getProductListByCategory: app.use(categoryMiddlewares, (context) => {
+    const products = productService.getList().filter((product) => product.categoryId === context.category.id);
     context.send({ values: products }, 200);
   }),
 

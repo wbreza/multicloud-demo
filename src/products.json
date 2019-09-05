@@ -2,6 +2,7 @@
   "products": [
     {
       "id": "x3890Dd",
+      "categoryId": "ke73Ap5",
       "name": "Apples",
       "description": "These apples are great!",
       "price": 1.00,
@@ -9,6 +10,7 @@
     },
     {
       "id": "p3458Ds",
+      "categoryId": "ke73Ap5",
       "name": "Orange",
       "description": "Full of vitamin C!",
       "price": 1.25,
@@ -16,6 +18,7 @@
     },
     {
       "id": "bk349Aa",
+      "categoryId": "ke73Ap5",
       "name": "Mango",
       "description": "Very tropical!",
       "price": 2.25,
@@ -23,9 +26,18 @@
     },
     {
       "id": "j243Dda",
+      "categoryId": "ke73Ap5",
       "name": "Avacado",
       "description": "Let's make some guacamole!",
       "price": 2.50,
+      "active": true
+    },
+    {
+      "id": "id340AF",
+      "categoryId": "n4783Sd",
+      "name": "Spinach",
+      "description": "Popeye's favorite!",
+      "price": 3.25,
       "active": true
     }
   ]

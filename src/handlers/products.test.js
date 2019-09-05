@@ -1,7 +1,8 @@
 const { CloudContextBuilder } = require("@multicloud/sls-core");
-const { getProductList, getProduct, postProduct, putProduct, patchProduct, deleteProduct } = require("../handlers/products");
+const { getProductList, getProductListByCategory, getProduct, postProduct, putProduct, patchProduct, deleteProduct } = require("../handlers/products");
 const productService = require("../services/productService");
-const demoModel = require("../products.json");
+const productsModel = require("../products.json");
+const categoriesModel = require("../categories.json");
 
 describe("Products REST API", () => {
   beforeEach(() => {
@@ -18,9 +19,26 @@ describe("Products REST API", () => {
         .invokeHandler(getProductList);
 
       expect(context.res).toMatchObject({
-        body: { values: demoModel.products },
+        body: { values: productsModel.products },
         status: 200
       });
+    });
+  });
+
+  it("responds with a list of products by category", async () => {
+    const category = categoriesModel.categories[0];
+    const expected = productsModel.products.filter((product) => product.categoryId === category.id);
+
+    const builder = new CloudContextBuilder();
+    const context = await builder
+      .asHttpRequest()
+      .withRequestMethod("GET")
+      .withRequestPathParams({ categoryID: category.id })
+      .invokeHandler(getProductListByCategory)
+
+    expect(context.res).toMatchObject({
+      body: { values: expected },
+      status: 200
     });
   });
 
@@ -44,11 +62,11 @@ describe("Products REST API", () => {
       const context = await builder
         .asHttpRequest()
         .withRequestMethod("GET")
-        .withRequestPathParams({ productId: demoModel.products[0].id })
+        .withRequestPathParams({ productId: productsModel.products[0].id })
         .invokeHandler(getProduct);
 
       expect(context.res).toMatchObject({
-        body: { value: demoModel.products[0] },
+        body: { value: productsModel.products[0] },
         status: 200
       });
     });
@@ -73,7 +91,7 @@ describe("Products REST API", () => {
       const context = await builder
         .asHttpRequest()
         .withRequestMethod("POST")
-        .withRequestBody(demoModel.products[0])
+        .withRequestBody(productsModel.products[0])
         .invokeHandler(postProduct);
 
       expect(context.res).toMatchObject({
@@ -113,12 +131,12 @@ describe("Products REST API", () => {
     });
 
     it("responds with 204 and updates product successfully", async () => {
-      productService.get = jest.fn(() => demoModel.products[0]);
+      productService.get = jest.fn(() => productsModel.products[0]);
       jest.spyOn(productService, "save");
 
       const productToUpdate = {
-        ...demoModel.products[0],
-        name: demoModel.products[0] + ' (Updated)',
+        ...productsModel.products[0],
+        name: productsModel.products[0] + ' (Updated)',
       };
 
       const builder = new CloudContextBuilder();
@@ -150,7 +168,7 @@ describe("Products REST API", () => {
     });
 
     it("responds with 204 and updates product successfully", async () => {
-      productService.get = jest.fn(() => demoModel.products[0]);
+      productService.get = jest.fn(() => productsModel.products[0]);
       jest.spyOn(productService, "save");
 
       const partialUpdate = {
@@ -158,7 +176,7 @@ describe("Products REST API", () => {
       };
 
       const expectedProduct = {
-        ...demoModel.products[0],
+        ...productsModel.products[0],
         name: partialUpdate.name,
       };
 
@@ -191,17 +209,17 @@ describe("Products REST API", () => {
     });
 
     it("responds with 204 and updates product successfully", async () => {
-      productService.get = jest.fn(() => demoModel.products[0]);
+      productService.get = jest.fn(() => productsModel.products[0]);
       jest.spyOn(productService, "remove");
 
       const builder = new CloudContextBuilder();
       const context = await builder
         .asHttpRequest()
         .withRequestMethod("GET")
-        .withRequestPathParams({ productId: demoModel.products[0].id })
+        .withRequestPathParams({ productId: productsModel.products[0].id })
         .invokeHandler(deleteProduct);
 
-      expect(productService.remove).toBeCalledWith(demoModel.products[0].id);
+      expect(productService.remove).toBeCalledWith(productsModel.products[0].id);
       expect(context.res.status).toEqual(204);
     });
   });

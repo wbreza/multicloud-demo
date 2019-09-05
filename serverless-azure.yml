@@ -22,17 +22,28 @@ provider:
   region: West US
   runtime: nodejs10.x
   apim:
-    api:
-      name: products-api
-      subscriptionRequired: false
-      displayName: Products API
-      description: Products CRUD REST API
-      protocols:
-        - https
-      path: products
-      authorization: none
-    backend:
-      url: api/products
+    apis:
+      - name: products-api
+        subscriptionRequired: false
+        displayName: Products API
+        description: Products CRUD REST API
+        protocols:
+          - https
+        path: products
+        authorization: none
+      - name: categories-api
+        subscriptionRequired: false
+        displayName: Categories API
+        description: Categories CRUD REST API
+        protocols:
+          - https
+        path: categories
+        authorization: none
+    backends:
+      - name: products-backend
+        url: api/products
+      - name: categories-backend
+        url: api/categories
 
   cors:
     allowCredentials: false
@@ -54,6 +65,7 @@ plugins:
   - serverless-webpack
 
 functions:
+  # Products
   getProductList:
     handler: src/handlers/products.getProductList
     events:
@@ -64,9 +76,27 @@ functions:
           route: products
           authLevel: anonymous
     apim:
+      api: products-api
+      backend: products-backend
       operations:
         - method: GET
           urlTemplate: /
+
+  getProductListByCategory:
+    handler: src/handlers/products.getProductListByCategory
+    events:
+      - http: true
+        x-azure-settings:
+          methods:
+            - GET
+          route: categories/{categoryId}/products
+          authLevel: anonymous
+    apim:
+      api: categories-api
+      backend: categories-backend
+      operations:
+        - method: GET
+          urlTemplate: /{categoryId}/products
 
   getProduct:
     handler: src/handlers/products.getProduct
@@ -78,6 +108,8 @@ functions:
           route: products/{productId}
           authLevel: anonymous
     apim:
+      api: products-api
+      backend: products-backend
       operations:
         - method: GET
           urlTemplate: /{productId}
@@ -95,6 +127,8 @@ functions:
           route: products
           authLevel: anonymous
     apim:
+      api: products-api
+      backend: products-backend
       operations:
         - method: POST
           urlTemplate: /
@@ -109,6 +143,8 @@ functions:
           route: products/{productId}
           authLevel: anonymous
     apim:
+      api: products-api
+      backend: products-backend
       operations:
         - method: PUT
           urlTemplate: /{productId}
@@ -126,6 +162,8 @@ functions:
           route: products/{productId}
           authLevel: anonymous
     apim:
+      api: products-api
+      backend: products-backend
       operations:
         - method: PATCH
           urlTemplate: /{productId}
@@ -143,9 +181,120 @@ functions:
           route: products/{productId}
           authLevel: anonymous
     apim:
+      api: products-api
+      backend: products-backend
       operations:
         - method: DELETE
           urlTemplate: /{productId}
           templateParameters:
             - name: productId
               type: string
+  # Categories
+  getCategoryList:
+    handler: src/handlers/categories.getCategoryList
+    events:
+      - http: true
+        x-azure-settings:
+          methods:
+            - GET
+          route: categories
+          authLevel: anonymous
+    apim:
+      api: categories-api
+      backend: categories-backend
+      operations:
+        - method: GET
+          urlTemplate: /
+
+  getCategory:
+    handler: src/handlers/categories.getCategory
+    events:
+      - http: true
+        x-azure-settings:
+          methods:
+            - GET
+          route: categories/{categoryId}
+          authLevel: anonymous
+    apim:
+      api: categories-api
+      backend: categories-backend
+      operations:
+        - method: GET
+          urlTemplate: /{categoryId}
+          templateParameters:
+            - name: categoryId
+              type: string
+
+  postCategory:
+    handler: src/handlers/categories.postCategory
+    events:
+      - http: true
+        x-azure-settings:
+          methods:
+            - POST
+          route: categories
+          authLevel: anonymous
+    apim:
+      api: categories-api
+      backend: categories-backend
+      operations:
+        - method: POST
+          urlTemplate: /
+
+  putCategory:
+    handler: src/handlers/categories.putCategory
+    events:
+      - http: true
+        x-azure-settings:
+          methods:
+            - PUT
+          route: categories/{categoryId}
+          authLevel: anonymous
+    apim:
+      api: categories-api
+      backend: categories-backend
+      operations:
+        - method: PUT
+          urlTemplate: /{categoryId}
+          templateParameters:
+            - name: categoryId
+              type: string
+
+  patchCategory:
+    handler: src/handlers/categories.patchCategory
+    events:
+      - http: true
+        x-azure-settings:
+          methods:
+            - PATCH
+          route: categories/{categoryId}
+          authLevel: anonymous
+    apim:
+      api: categories-api
+      backend: categories-backend
+      operations:
+        - method: PATCH
+          urlTemplate: /{categoryId}
+          templateParameters:
+            - name: categoryId
+              type: string
+
+  deleteCategory:
+    handler: src/handlers/categories.deleteCategory
+    events:
+      - http: true
+        x-azure-settings:
+          methods:
+            - DELETE
+          route: categories/{categoryId}
+          authLevel: anonymous
+    apim:
+      api: categories-api
+      backend: categories-backend
+      operations:
+        - method: DELETE
+          urlTemplate: /{categoryId}
+          templateParameters:
+            - name: categoryId
+              type: string
+
