@@ -97,6 +97,9 @@ functions:
       operations:
         - method: GET
           urlTemplate: /{categoryId}/products
+          templateParameters:
+            - name: categoryId
+              type: string
 
   getProduct:
     handler: src/handlers/products.getProduct
