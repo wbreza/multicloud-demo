@@ -20,9 +20,9 @@
     "serverless"
   ],
   "dependencies": {
-    "@multicloud/sls-aws": "^0.1.1-0",
-    "@multicloud/sls-azure": "^0.1.1-2",
-    "@multicloud/sls-core": "^0.1.1-6",
+    "@multicloud/sls-aws": "^0.1.1-4",
+    "@multicloud/sls-azure": "^0.1.1-4",
+    "@multicloud/sls-core": "^0.1.1-7",
     "shortid": "^2.2.14"
   },
   "devDependencies": {
