@@ -18,6 +18,7 @@ service: multicloud-product-demo
 # frameworkVersion: "=X.X.X"
 
 provider:
+  prefix: ${opt:prefix, 'sls'}
   name: azure
   region: West US
   runtime: nodejs10.x
