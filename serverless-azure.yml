@@ -45,21 +45,20 @@ provider:
         url: api/products
       - name: categories-backend
         url: api/categories
-
-  cors:
-    allowCredentials: false
-    allowedOrigins:
-      - "*"
-    allowedMethods:
-      - GET
-      - POST
-      - PUT
-      - DELETE
-      - PATCH
-    allowedHeaders:
-      - "*"
-    exposeHeaders:
-      - "*"
+    cors:
+      allowCredentials: false
+      allowedOrigins:
+        - "*"
+      allowedMethods:
+        - GET
+        - POST
+        - PUT
+        - DELETE
+        - PATCH
+      allowedHeaders:
+        - "*"
+      exposeHeaders:
+        - "*"
 
 plugins:
   - serverless-azure-functions
