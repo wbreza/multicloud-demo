@@ -46,6 +46,3 @@ To deploy to AWS you will need an AWS account and have your credentials configur
 ```bash
 npm run deploy:aws
 ```
-
-## FAQs
-The **@multicloud** NPM packages referenced in this project are not yet available on the public NPM registry.  These packages will be available soon.

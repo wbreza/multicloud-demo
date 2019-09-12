@@ -5,7 +5,6 @@
   "scripts": {
     "lint": "eslint src/**/*.js",
     "test": "jest",
-    "test:integration": "npm run test -- --testRegex=test\\.integration\\.js",
     "start": "npm run start:azure",
     "start:azure": "sls offline --config serverless-azure.yml",
     "start:aws": "sls offline --config serverless-aws.yml",
@@ -13,16 +12,17 @@
     "deploy": "npm run deploy:azure && npm run deploy:aws",
     "deploy:aws": "sls deploy --config serverless-aws.yml",
     "deploy:azure": "sls deploy --config serverless-azure.yml",
-    "update:multicloud": "npm install @multicloud/sls-core@beta @multicloud/sls-azure@beta @multicloud/sls-aws@beta --save"
+    "update:multicloud:latest": "npm install @multicloud/sls-core@latest @multicloud/sls-azure@latest @multicloud/sls-aws@latest --save",
+    "update:multicloud:beta": "npm install @multicloud/sls-core@beta @multicloud/sls-azure@beta @multicloud/sls-aws@beta --save"
   },
   "keywords": [
     "azure",
     "serverless"
   ],
   "dependencies": {
-    "@multicloud/sls-aws": "^0.1.1-8",
-    "@multicloud/sls-azure": "^0.1.1-6",
-    "@multicloud/sls-core": "^0.1.1-14",
+    "@multicloud/sls-aws": "^0.1.1",
+    "@multicloud/sls-azure": "^0.1.1",
+    "@multicloud/sls-core": "^0.1.1",
     "shortid": "^2.2.14"
   },
   "devDependencies": {
