@@ -28,6 +28,13 @@ plugins:
   - serverless-webpack
 
 functions:
+  # Health
+  ping:
+    handler: src/handlers/health.ping
+    events:
+      - http:
+          method: GET
+          path: /health
   # Products
   getProductList:
     handler: src/handlers/products.getProductList

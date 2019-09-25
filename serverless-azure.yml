@@ -40,11 +40,21 @@ provider:
           - https
         path: categories
         authorization: none
+      - name: health-api
+        subscriptionRequired: false
+        displayName: Health API
+        description: Health REST API
+        protocols:
+          - https
+        path: health
+        authorization: none
     backends:
       - name: products-backend
         url: api/products
       - name: categories-backend
         url: api/categories
+      - name: health-backend
+        url: api/health
     cors:
       allowCredentials: false
       allowedOrigins:
@@ -65,6 +75,23 @@ plugins:
   - serverless-webpack
 
 functions:
+  # Health
+  ping:
+    handler: src/handlers/health.ping
+    events:
+      - http: true
+        x-azure-settings:
+          methods:
+            - GET
+          route: health
+          authLevel: anonymous
+    apim:
+      api: health-api
+      backend: health-backend
+      operations:
+        - method: GET
+          urlTemplate: /
+
   # Products
   getProductList:
     handler: src/handlers/products.getProductList
@@ -300,4 +327,3 @@ functions:
           templateParameters:
             - name: categoryId
               type: string
-
