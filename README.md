@@ -46,3 +46,5 @@ To deploy to AWS you will need an AWS account and have your credentials configur
 ```bash
 $ npm run deploy:aws
 ```
+
+test
